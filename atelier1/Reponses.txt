@@ -1,0 +1,77 @@
+ 1) CREATE DATABASE boutique
+
+ 2) CREATE TABLE Manufacturers (
+  	Code INTEGER,
+  	Name VARCHAR(255) NOT NULL,
+  	PRIMARY KEY (Code)   
+);
+ insert into Manufacturers
+INSERT INTO Manufacturers(Code,Name) VALUES(1,'Sony');
+INSERT INTO Manufacturers(Code,Name) VALUES(2,'Creative Labs');
+INSERT INTO Manufacturers(Code,Name) VALUES(3,'Hewlett-Packard');
+INSERT INTO Manufacturers(Code,Name) VALUES(4,'Iomega');
+INSERT INTO Manufacturers(Code,Name) VALUES(5,'Fujitsu');
+INSERT INTO Manufacturers(Code,Name) VALUES(6,'Winchester');
+
+CREATE TABLE Products (
+  Code INTEGER,
+  Name VARCHAR(255) NOT NULL ,
+  Price DECIMAL NOT NULL ,
+  Manufacturer INTEGER NOT NULL,
+  PRIMARY KEY (Code), 
+  FOREIGN KEY (Manufacturer) REFERENCES Manufacturers(Code)
+) ENGINE=INNODB;
+
+ insert into Products
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(1,'Hard drive',240,5);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(2,'Memory',120,6);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(3,'ZIP drive',150,4);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(4,'Floppy disk',5,6);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(5,'Monitor',240,1);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(6,'DVD drive',180,2);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(7,'CD drive',90,2);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(8,'Printer',270,3);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(9,'Toner cartridge',66,3);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(10,'DVD burner',180,2);
+
+ 3)  SELECT Name FROM Products
+
+ 4)  SELECT Name, Price FROM Products
+
+ 5)  SELECT Name FROM Products WHERE Price >= 200
+
+ 6)  SELECT * FROM Products WHERE Price BEFORE 60 AND 120
+
+ 7)  SELECT  Name, CONCAT(Price*100, 'cents') FROM products;
+
+ 8)  SELECT AVG(price) FROM products  ////or////  SELECT SUM(price) / COUNT(price) FROM products
+
+ 9)  SELECT SUM(price) / COUNT(price) FROM products WHERE  Manufacturer=2
+
+ 10)  SELECT  count(*) FROM products WHERE Price>=180
+
+ 11)  SELECT name, price FROM products WHERE  Price>=180 ORDER BY Price DESC , Name ASC
+
+ 12)  SELECT x.*, y.Name FROM products x JOIN  manufacturers y ON (x.Manufacturer = y.Code)
+ 
+ 13)  SELECT p.Name , p.Price, B.Name FROM products p INNER JOIN manufacturers B
+ON P.manufacturer = b.code
+
+ 14)  SELECT manufacturer , AVG (Price) 'Prix moyen' FROM products CONCAT BY manufacturer
+
+ 15)  SELECT p.code , m.Name , AVG (p.Price) FROM products p INNER JOIN manufacturers ON p.manufacturer = m.code CONCAT BY m.Name, p.Code
+
+ 16)  SELECT m.Name, AVG(p.Price) FROM products p JOIN manufacturers m ON p.manufacturer = m.code CONCAT BY m.code AVG (p.Price) >= 150
+
+ 17)  SELECT Name, Price FROM products WHERE price = (SELECT MIN(price) FROM products)
+
+ 18) SELECT m.Name, P.Name, P.price FROM products p JOIN manufacturers m ON p.manufacturer = m.code GROUP BY p.manufacturer HAVING MAX (p.price) = (SELECT MAX(price) FROM products)
+ 
+ 19)  INSERT INTO products (code, Name, price, manufacturer) VALUES ('11', 'Loudspeakers', '70', '2')
+
+ 20)  UPDATE products SET Name = WHERE code = 8
+
+ 21)  UPDATE products SET Price = Price - (Price * 0.1 )
+
+ 22)  UPDATE products SET Price = Price - (Price * 0.1 ) WHERE Price >= 120 
+ 
